@@ -11,3 +11,9 @@ export type Tuser = {
   level: number,
   password?: string,
 };
+
+export type Torder = {
+  id?: number,
+  userId: number,
+  productsIds: number[],
+};
