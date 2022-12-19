@@ -6,9 +6,10 @@ export type TProduct = {
 };
 
 export type Tuser = {
-  username: string,
-  vocation: string,
-  level: number,
+  id?: number,
+  username?: string,
+  vocation?: string,
+  level?: number,
   password?: string,
 };
 

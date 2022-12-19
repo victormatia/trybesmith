@@ -2,7 +2,8 @@ import express from 'express';
 import getAllOrdersController from '../controllers/order.controller';
 import { postProductController,
   getAllProductsController } from '../controllers/product.controller';
-import { postUserController } from '../controllers/user.controller';
+import { loginController, postUserController } from '../controllers/user.controller';
+import verifyField from '../middlewares';
 
 const route = express.Router();
 
@@ -12,6 +13,7 @@ route.get('/products', getAllProductsController);
 
 // user routes
 route.post('/users', postUserController);
+route.post('/login', verifyField, loginController);
 
 // order routes
 route.get('/orders', getAllOrdersController);
