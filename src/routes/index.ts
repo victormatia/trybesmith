@@ -3,7 +3,15 @@ import getAllOrdersController from '../controllers/order.controller';
 import { postProductController,
   getAllProductsController } from '../controllers/product.controller';
 import { loginController, postUserController } from '../controllers/user.controller';
-import { checksAmountField, checksLoginRequestFields, checksNameField } from '../middlewares';
+import {
+  checksAmountField,
+  checksLevelField,
+  checksLoginRequestFields,
+  checksNameField,
+  checksPasswordField,
+  checksUserNameField,
+  checksVocationField,
+} from '../middlewares';
 
 const route = express.Router();
 
@@ -12,7 +20,14 @@ route.post('/products', checksNameField, checksAmountField, postProductControlle
 route.get('/products', getAllProductsController);
 
 // user routes
-route.post('/users', postUserController);
+route.post(
+  '/users',
+  checksUserNameField,
+  checksVocationField,
+  checksLevelField,
+  checksPasswordField,
+  postUserController,
+);
 route.post('/login', checksLoginRequestFields, loginController);
 
 // order routes
