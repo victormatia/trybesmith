@@ -18,3 +18,12 @@ export const getAllProducts = async (): Promise<RowDataPacket[] & TProduct[]> =>
 
   return products;
 };
+
+export const updateProduct = async (productId: number, orderId: number): Promise<number> => {
+  const [{ affectedRows }] = await connection.execute<ResultSetHeader>(
+    'UPDATE Trybesmith.products SET order_id = ? WHERE id = ?;',
+    [orderId, productId],
+  );
+
+  return affectedRows;
+};

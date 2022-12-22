@@ -1,14 +1,19 @@
 import jwt from 'jsonwebtoken';
-import { Tuser } from '../types';
+import { Tdecoded, Tuser } from '../types';
 
 const secret: string = process.env.JWT_SECRET || 'my-secret';
 
-const createToken = (user: Tuser): string => {
-  const { username, vocation, level } = user;
-  const userNoPass = { username, vocation, level };
+export const createToken = (user: Tuser): string => {
+  const { username, id } = user;
+  const userNoPass = { id, username };
+  
   const token = jwt.sign(userNoPass, secret, { expiresIn: '1d', algorithm: 'HS256' });
 
   return token;
 };
 
-export default createToken;
+export const verifyToken = (token: string): Tdecoded => {
+  const decoded = jwt.verify(token, secret);
+
+  return decoded as Tdecoded;
+}; 

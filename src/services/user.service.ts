@@ -1,4 +1,4 @@
-import createToken from '../auth/jwt';
+import { createToken } from '../auth/jwt';
 import { getUserByName, postUser } from '../models/user.model';
 import { Tuser } from '../types';
 

@@ -18,3 +18,10 @@ export type Torder = {
   userId: number,
   productsIds: number[],
 };
+
+export type Tdecoded = {
+  id: number,
+  username: string,
+  iat?: number,
+  exp?: number
+};

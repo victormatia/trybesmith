@@ -1,5 +1,5 @@
 import express from 'express';
-import getAllOrdersController from '../controllers/order.controller';
+import { getAllOrdersController, postOrderController } from '../controllers/order.controller';
 import { postProductController,
   getAllProductsController } from '../controllers/product.controller';
 import { loginController, postUserController } from '../controllers/user.controller';
@@ -9,6 +9,7 @@ import {
   checksLoginRequestFields,
   checksNameField,
   checksPasswordField,
+  checksProductsIdsField,
   checksUserNameField,
   checksVocationField,
 } from '../middlewares';
@@ -32,5 +33,6 @@ route.post('/login', checksLoginRequestFields, loginController);
 
 // order routes
 route.get('/orders', getAllOrdersController);
+route.post('/orders', checksProductsIdsField, postOrderController);
 
 export default route;
