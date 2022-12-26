@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { verifyToken } from '../auth/jwt';
 
 export const checksLoginRequestFields = async (req: Request, res: Response, next: NextFunction) => {
   if (!('username' in req.body)) {
@@ -130,4 +131,22 @@ export const checksProductsIdsField = async (req: Request, res: Response, next: 
   }
 
   next();
+};
+
+export const verifyTokenMiddleware = (
+  req: Request,
+  res: Response, 
+  next: NextFunction,
+) => {
+  const { authorization } = req.headers;
+
+  if (!authorization) return res.status(401).json({ message: 'Token not found' });
+
+  try {
+    const { id } = verifyToken(authorization);
+    req.body.userId = id;
+    return next();
+  } catch (e) {
+    return res.status(401).json({ message: 'Invalid token' });
+  }
 };

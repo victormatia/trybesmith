@@ -12,6 +12,7 @@ import {
   checksProductsIdsField,
   checksUserNameField,
   checksVocationField,
+  verifyTokenMiddleware,
 } from '../middlewares';
 
 const route = express.Router();
@@ -33,6 +34,6 @@ route.post('/login', checksLoginRequestFields, loginController);
 
 // order routes
 route.get('/orders', getAllOrdersController);
-route.post('/orders', checksProductsIdsField, postOrderController);
+route.post('/orders', verifyTokenMiddleware, checksProductsIdsField, postOrderController);
 
 export default route;

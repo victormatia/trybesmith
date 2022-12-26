@@ -1,4 +1,3 @@
-import { verifyToken } from '../auth/jwt';
 import { getAllOrders, postOrder } from '../models/order.model';
 import { updateProduct } from '../models/product.model';
 import { Torder } from '../types';
@@ -17,17 +16,10 @@ export const getAllOrdersService = async (): Promise<{ result: Torder[] }> => {
   return { result: covertCamelCase };
 };
 
-export const postOderService = async (productsIds: number[], authorization?: string) => {
-  if (!authorization) return { message: 'Token not found' };
-  
-  try {
-    const { id } = verifyToken(authorization);
-    const orderId = await postOrder(id);
+export const postOderService = async (productsIds: number[], userId: number) => {
+  const orderId = await postOrder(userId);
 
-    await Promise.all(productsIds.map(async (productsId) => updateProduct(productsId, orderId)));
+  await Promise.all(productsIds.map(async (productsId) => updateProduct(productsId, orderId)));
   
-    return { result: { userId: id, productsIds } };
-  } catch (e) {
-    return { message: 'Invalid token' };
-  }
+  return { result: { userId, productsIds } };
 };
